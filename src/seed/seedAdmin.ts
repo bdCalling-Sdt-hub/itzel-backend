@@ -5,8 +5,7 @@ import { USER_ROLES } from '../enums/user';
 import { logger } from '../shared/logger';
 
 const superUser: any = {
-  firstName: 'SUPER',
-  lastName: 'ADMIN',
+  name: 'ITZEL',
   role: USER_ROLES.ADMIN,
   email: config.admin.email as string,
   password: config.admin.password as string,
