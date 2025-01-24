@@ -27,6 +27,12 @@ const fileUploadHandler = () => {
         case 'image':
           uploadDir = path.join(baseUploadDir, 'images');
           break;
+        case 'thumbnailImage':
+          uploadDir = path.join(baseUploadDir, 'images');
+          break;
+        case 'introMedia':
+          uploadDir = path.join(baseUploadDir, 'medias');
+          break;
         case 'media':
           uploadDir = path.join(baseUploadDir, 'medias');
           break;
@@ -55,7 +61,7 @@ const fileUploadHandler = () => {
 
   //file filter
   const filterFilter = (req: Request, file: any, cb: FileFilterCallback) => {
-    if (file.fieldname === 'image') {
+    if (file.fieldname === 'image' || file.fieldname === 'thumbnailImage') {
       if (
         file.mimetype === 'image/jpeg' ||
         file.mimetype === 'image/png' ||
@@ -70,7 +76,7 @@ const fileUploadHandler = () => {
           )
         );
       }
-    } else if (file.fieldname === 'media') {
+    } else if (file.fieldname === 'media' || file.fieldname === 'introMedia') {
       if (file.mimetype === 'video/mp4' || file.mimetype === 'audio/mpeg') {
         cb(null, true);
       } else {
@@ -99,6 +105,8 @@ const fileUploadHandler = () => {
     { name: 'image', maxCount: 3 },
     { name: 'media', maxCount: 3 },
     { name: 'doc', maxCount: 3 },
+    { name: 'thumbnailImage', maxCount: 3 },
+    { name: 'introMedia', maxCount: 3 },
   ]);
   return upload;
 };
