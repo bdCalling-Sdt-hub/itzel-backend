@@ -70,6 +70,7 @@ const updateEvent = async (
   ) {
     await unlinkFile(isExistEvent.introMedia);
   }
+  if (typeof payload.tags === 'string') payload.tags = JSON.parse(payload.tags);
   const result = await Event.findByIdAndUpdate(id, payload, { new: true });
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to update event!');
