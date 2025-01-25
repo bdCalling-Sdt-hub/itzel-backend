@@ -7,6 +7,9 @@ import unlinkFile from '../../../shared/unlinkFile';
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
   // await EventValidation.createEventZodSchema.parseAsync(payload);
   if (typeof payload.tags === 'string') payload.tags = JSON.parse(payload.tags);
+  console.log(payload.location);
+  if (typeof payload.location === 'string')
+    payload.location = JSON.parse(payload.location);
   const result = await Event.create(payload);
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create event!');

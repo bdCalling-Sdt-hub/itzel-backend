@@ -7,7 +7,6 @@ const eventSchema = new Schema<IEvent, EventModel>(
     introMedia: { type: String, required: true },
     name: { type: String, required: true },
     time: { type: Date, required: true },
-    location: { type: String, required: true },
     description: { type: String, required: true },
     tags: { type: [String], required: true },
     price: { type: Number, required: true },
@@ -16,6 +15,10 @@ const eventSchema = new Schema<IEvent, EventModel>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    location: {
+      name: { type: String, required: true },
+      coordinate: { type: [Number], required: true },
     },
   },
   { timestamps: true }

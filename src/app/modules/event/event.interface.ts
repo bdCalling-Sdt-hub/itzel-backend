@@ -5,7 +5,10 @@ export type IEvent = {
   introMedia: string;
   name: string;
   time: Date;
-  location: string;
+  location: {
+    name: string;
+    coordinate: Array<number>;
+  };
   description: string;
   tags: Array<string>;
   price: number;

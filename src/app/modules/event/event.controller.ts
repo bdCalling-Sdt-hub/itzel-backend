@@ -16,6 +16,7 @@ const createEvent = catchAsync(async (req: Request, res: Response) => {
   if (req.files && 'introMedia' in req.files && req.files.introMedia[0]) {
     req.body.introMedia = '/medias/' + req.files.introMedia[0].filename;
   }
+  console.log(req.body);
   req.body.creator = req.user.id;
   const result = await EventService.createEvent(req.body);
   sendResponse(res, {
