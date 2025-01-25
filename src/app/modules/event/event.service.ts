@@ -3,6 +3,8 @@ import ApiError from '../../../errors/ApiError';
 import { Event } from './event.model';
 import { IEvent } from './event.interface';
 import unlinkFile from '../../../shared/unlinkFile';
+import { Group } from '../group/group.model';
+import { IGroup } from '../group/group.interface';
 
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
   // await EventValidation.createEventZodSchema.parseAsync(payload);
@@ -14,6 +16,13 @@ const createEvent = async (payload: IEvent): Promise<IEvent> => {
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create event!');
   }
+  const createGroup: IGroup = await Group.create({
+    name: result.name,
+    event: result._id,
+    members: [result.creator],
+  });
+  if (!createGroup)
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create group!');
   return result;
 };
 
