@@ -111,10 +111,13 @@ const deleteEvent = async (id: string): Promise<IEvent | null> => {
   return result;
 };
 
+const perticipate = async (eventId: string, userId: string): Promise<any> => {};
+
 export const EventService = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  perticipate,
 };

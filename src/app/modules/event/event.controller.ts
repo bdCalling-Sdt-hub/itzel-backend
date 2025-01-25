@@ -81,10 +81,21 @@ const deleteEvent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const perticipate = catchAsync(async (req: Request, res: Response) => {
+  const result = await EventService.perticipate(req.params.id, req.body);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Event perticipate successfully',
+    data: result,
+  });
+});
+
 export const EventController = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  perticipate,
 };
