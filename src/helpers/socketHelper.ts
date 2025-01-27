@@ -12,5 +12,6 @@ const socket = (io: Server) => {
     });
   });
 };
-
+//@ts-ignore
+export const io = global.io;
 export const socketHelper = { socket };

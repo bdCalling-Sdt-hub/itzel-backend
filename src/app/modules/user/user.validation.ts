@@ -6,7 +6,7 @@ const createUserZodSchema = z.object({
     contact: z.string().optional(),
     email: z.string({ required_error: 'Email is required' }),
     password: z.string({ required_error: 'Password is required' }),
-    location: z.string({ required_error: 'Location is required' }),
+    location: z.string().optional(),
     profile: z.string().optional(),
   }),
 });
