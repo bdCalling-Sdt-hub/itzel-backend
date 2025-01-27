@@ -13,6 +13,7 @@ router.post(
   validateRequest(MessageValidation.createMessageZodSchema),
   MessageController.createMessage
 );
+
 router.get('/', MessageController.getAllMessages);
 router.get('/:id', MessageController.getMessageById);
 router.patch(

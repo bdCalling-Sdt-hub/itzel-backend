@@ -3,7 +3,6 @@ import ApiError from '../../../errors/ApiError';
 import { Message } from './message.model';
 import { IMessage } from './message.interface';
 import { Server } from 'socket.io';
-import { io } from '../../../helpers/socketHelper';
 
 const createMessage = async (payload: IMessage): Promise<IMessage> => {
   const result = await Message.create(payload);
@@ -11,9 +10,11 @@ const createMessage = async (payload: IMessage): Promise<IMessage> => {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create message!');
   }
   if (payload.group) {
-    io?.emit(`NEW_GROUP_MESSAGE::${payload.to}`, result);
+    //@ts-ignore
+    global.io?.emit(`NEW_GROUP_MESSAGE::${payload.to?.toString()}`, result);
   } else {
-    io?.emit(`NEW_GROUP_MESSAGE::${payload.to}`, result);
+    //@ts-ignore
+    global.io?.emit(`NEW_MESSAGE::${payload.to?.toString()}`, result);
   }
   return result;
 };
