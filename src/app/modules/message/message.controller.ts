@@ -46,9 +46,18 @@ const getMessageById = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateMessage = catchAsync(async (req: Request, res: Response) => {
-  const result = await MessageService.updateMessage(req.params.id, req.body);
+  req.body.from = req.user.id;
+  const id = req.params.id;
+  let images: string[] = [];
+  if (req.files && 'images' in req.files && req.files.images[0]) {
+    req.files.images.forEach(file => {
+      images?.push('/images/' + file.filename);
+    });
+  }
+  const data = { ...req.body, ...(images.length > 0 && images) };
+  const result = await MessageService.updateMessage(id, data);
   sendResponse(res, {
-    statusCode: StatusCodes.OK,
+    statusCode: StatusCodes.CREATED,
     success: true,
     message: 'Message updated successfully',
     data: result,
