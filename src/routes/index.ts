@@ -5,6 +5,7 @@ import { CategoryRoutes } from '../app/modules/category/category.route';
 import { EventRoutes } from '../app/modules/event/event.route';
 import { GroupRoutes } from '../app/modules/group/group.route';
 import { MessageRoutes } from '../app/modules/message/message.route';
+import { InfoRoutes } from '../app/modules/info/info.route';
 
 const router = express.Router();
 
@@ -32,6 +33,10 @@ const apiRoutes = [
   {
     path: '/message',
     route: MessageRoutes,
+  },
+  {
+    path: '/info',
+    route: InfoRoutes,
   },
 ];
 
