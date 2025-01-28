@@ -16,8 +16,8 @@ router.post(
   validateRequestZFD(MessageValidation.createMessageZodSchema),
   MessageController.createMessage
 );
-router.get('/', MessageController.getAllMessages);
-router.get('/:id', MessageController.getMessageById);
+router.get('/', auth(...rolesOfAccess), MessageController.getAllMessages);
+router.get('/:id', auth(...rolesOfAccess), MessageController.getMessageById);
 router.patch('/:id', auth(...rolesOfAccess), MessageController.updateMessage);
 router.delete('/:id', auth(...rolesOfAccess), MessageController.deleteMessage);
 
