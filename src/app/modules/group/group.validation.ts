@@ -6,13 +6,7 @@ const createGroupZodSchema = z.object({
       required_error: 'name is required',
       invalid_type_error: 'name should be type string',
     }),
-    members: z.array(
-      z
-        .string({
-          invalid_type_error: 'members array item should have type string',
-        })
-        .optional()
-    ),
+
     event: z
       .string({ invalid_type_error: 'event should be type objectID or string' })
       .optional(),

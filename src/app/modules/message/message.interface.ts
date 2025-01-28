@@ -6,6 +6,7 @@ export type IMessage = {
   group?: Types.ObjectId;
   replyTo?: Types.ObjectId;
   message: string;
+  files?: [string];
 };
 
 export type MessageModel = Model<IMessage>;

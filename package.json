@@ -49,6 +49,7 @@
     "socket.io": "^4.7.5",
     "winston": "^3.13.0",
     "winston-daily-rotate-file": "^5.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.5"
   }
 }

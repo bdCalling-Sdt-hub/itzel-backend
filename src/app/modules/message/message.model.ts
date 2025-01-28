@@ -8,6 +8,10 @@ const messageSchema = new Schema<IMessage, MessageModel>(
     group: { type: Schema.Types.ObjectId, ref: 'Group', required: false },
     replyTo: { type: Schema.Types.ObjectId, ref: 'Message', required: false },
     message: { type: String, required: true },
+    files: {
+      type: [String],
+      required: false,
+    },
   },
   { timestamps: true }
 );

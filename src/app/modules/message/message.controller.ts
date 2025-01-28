@@ -3,9 +3,11 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import { MessageService } from './message.service';
+import { MessageValidation } from './message.validation';
 
 const createMessage = catchAsync(async (req: Request, res: Response) => {
   req.body.from = req.user.id;
+  await MessageValidation.createMessageZodSchema.safeParseAsync(req.body);
   const result = await MessageService.createMessage(req.body);
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
