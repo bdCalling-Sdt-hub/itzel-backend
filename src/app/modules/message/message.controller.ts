@@ -7,8 +7,14 @@ import { MessageValidation } from './message.validation';
 
 const createMessage = catchAsync(async (req: Request, res: Response) => {
   req.body.from = req.user.id;
-  await MessageValidation.createMessageZodSchema.safeParseAsync(req.body);
-  const result = await MessageService.createMessage(req.body);
+  let images: string[] = [];
+  if (req.files && 'images' in req.files && req.files.images[0]) {
+    req.files.images.forEach(file => {
+      images?.push('/images/' + file.filename);
+    });
+  }
+  const data = { ...req.body, images };
+  const result = await MessageService.createMessage(data);
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     success: true,

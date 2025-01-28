@@ -27,6 +27,9 @@ const fileUploadHandler = () => {
         case 'image':
           uploadDir = path.join(baseUploadDir, 'images');
           break;
+        case 'images':
+          uploadDir = path.join(baseUploadDir, 'images');
+          break;
         case 'thumbnailImage':
           uploadDir = path.join(baseUploadDir, 'images');
           break;
@@ -61,7 +64,11 @@ const fileUploadHandler = () => {
 
   //file filter
   const filterFilter = (req: Request, file: any, cb: FileFilterCallback) => {
-    if (file.fieldname === 'image' || file.fieldname === 'thumbnailImage') {
+    if (
+      file.fieldname === 'image' ||
+      file.fieldname === 'thumbnailImage' ||
+      file.fieldname === 'images'
+    ) {
       if (
         file.mimetype === 'image/jpeg' ||
         file.mimetype === 'image/png' ||
@@ -107,6 +114,7 @@ const fileUploadHandler = () => {
     { name: 'doc', maxCount: 3 },
     { name: 'thumbnailImage', maxCount: 3 },
     { name: 'introMedia', maxCount: 3 },
+    { name: 'images', maxCount: 10 },
   ]);
   return upload;
 };

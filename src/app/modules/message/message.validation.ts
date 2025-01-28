@@ -5,7 +5,7 @@ const createMessageZodSchema = zfd.formData({
   group: zfd.text().optional(),
   replyTo: zfd.text().optional(),
   message: zfd.text(),
-  files: zfd.file().optional(),
+  images: zfd.file().optional(),
 });
 
 const updateMessageZodSchema = zfd.formData({
@@ -14,7 +14,7 @@ const updateMessageZodSchema = zfd.formData({
   group: zfd.text().optional(),
   replyTo: zfd.text().optional(),
   message: zfd.text().optional(),
-  files: zfd.file().optional(),
+  images: zfd.file().optional(),
 });
 
 export const MessageValidation = {
