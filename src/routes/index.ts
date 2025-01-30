@@ -8,6 +8,7 @@ import { MessageRoutes } from '../app/modules/message/message.route';
 import { InfoRoutes } from '../app/modules/info/info.route';
 import { OrganizationsRoutes } from '../app/modules/organizations/organizations.route';
 import { JobRoutes } from '../app/modules/job/job.route';
+import { ApplicantRoutes } from '../app/modules/applicant/applicant.route';
 
 const router = express.Router();
 
@@ -47,6 +48,10 @@ const apiRoutes = [
   {
     path: '/job',
     route: JobRoutes,
+  },
+  {
+    path: '/applicant',
+    route: ApplicantRoutes,
   },
 ];
 
