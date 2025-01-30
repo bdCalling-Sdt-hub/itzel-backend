@@ -1,0 +1,79 @@
+import { Request, Response } from 'express';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { StatusCodes } from 'http-status-codes';
+import { JobService } from './job.service';
+
+const createJob = catchAsync(async (req: Request, res: Response) => {
+  if (req.files && 'image' in req.files && req.files.image[0]) {
+    req.body.image = '/images/' + req.files.image[0].filename;
+  }
+  req.body.postedBy = req.user.id;
+  const result = await JobService.createJob(req.body);
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Job created successfully',
+    data: result,
+  });
+});
+
+const getAllJobs = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query;
+  const result = await JobService.getAllJobs(query);
+  sendResponse(res, {
+    pagination: {
+      limit: Number(query.limit) || 10,
+      page: Number(query.page) || 1,
+      total: result.length,
+      totalPage: Math.ceil(result.length / (Number(query.limit) || 10)),
+    },
+
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Jobs fetched successfully',
+    data: result,
+  });
+});
+
+const getJobById = catchAsync(async (req: Request, res: Response) => {
+  const result = await JobService.getJobById(req.params.id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Job fetched successfully',
+    data: result,
+  });
+});
+
+const updateJob = catchAsync(async (req: Request, res: Response) => {
+  if (req.files && 'image' in req.files && req.files.image[0]) {
+    req.body.image = '/images/' + req.files.image[0].filename;
+  }
+
+  const result = await JobService.updateJob(req.params.id, req.body);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Job updated successfully',
+    data: result,
+  });
+});
+
+const deleteJob = catchAsync(async (req: Request, res: Response) => {
+  const result = await JobService.deleteJob(req.params.id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Job deleted successfully',
+    data: result,
+  });
+});
+
+export const JobController = {
+  createJob,
+  getAllJobs,
+  getJobById,
+  updateJob,
+  deleteJob,
+};

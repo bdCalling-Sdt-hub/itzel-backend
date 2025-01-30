@@ -7,6 +7,7 @@ import { GroupRoutes } from '../app/modules/group/group.route';
 import { MessageRoutes } from '../app/modules/message/message.route';
 import { InfoRoutes } from '../app/modules/info/info.route';
 import { OrganizationsRoutes } from '../app/modules/organizations/organizations.route';
+import { JobRoutes } from '../app/modules/job/job.route';
 
 const router = express.Router();
 
@@ -42,6 +43,10 @@ const apiRoutes = [
   {
     path: '/organizations',
     route: OrganizationsRoutes,
+  },
+  {
+    path: '/job',
+    route: JobRoutes,
   },
 ];
 
