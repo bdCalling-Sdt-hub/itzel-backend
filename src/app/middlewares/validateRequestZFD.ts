@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { ZodError } from 'zod';
-
+import { Schema, ZodError } from 'zod';
 const validateRequestZFD =
-  (schema: any) => async (req: Request, res: Response, next: NextFunction) => {
+  (schema: Schema) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await schema.parseAsync(req.body);
+      const fullData = {
+        ...req.body,
+      };
+      await schema.parseAsync(fullData);
       next();
     } catch (error) {
       next(error);
