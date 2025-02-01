@@ -13,7 +13,12 @@ router.post(
   validateRequest(GroupValidation.createGroupZodSchema),
   GroupController.createGroup
 );
-router.get('/', GroupController.getAllGroups);
+router.get('/', auth(USER_ROLES.ADMIN), GroupController.getAllGroups);
+router.get(
+  '/my',
+  auth(...rolesOfAccess, USER_ROLES.USER),
+  GroupController.getMyGroup
+);
 router.get('/:id', GroupController.getGroupById);
 router.patch(
   '/:id',

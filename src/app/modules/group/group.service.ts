@@ -67,10 +67,16 @@ const deleteGroup = async (id: string): Promise<IGroup | null> => {
   return result;
 };
 
+const getMyGroupFromDB = async (userId: string): Promise<IGroup[]> => {
+  const result = await Group.find({ members: { $in: [userId] } });
+  return result;
+};
+
 export const GroupService = {
   createGroup,
   getAllGroups,
   getGroupById,
   updateGroup,
   deleteGroup,
+  getMyGroupFromDB,
 };
