@@ -10,10 +10,10 @@ router.post(
   auth(...rolesOfAccess),
   EventController.addEventToWishList
 );
-router.post(
+router.delete(
   '/remove/:id',
   auth(...rolesOfAccess),
-  EventController.addEventToWishList
+  EventController.removeEventFromWishList
 );
 
 export const EventWishListRoutes = router;
