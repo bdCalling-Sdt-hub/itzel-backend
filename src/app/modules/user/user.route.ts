@@ -6,6 +6,7 @@ import validateRequest from '../../middlewares/validateRequest';
 import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
 import { WishlistRoutes } from './wishlist/wishlist.route';
+import { StatusRoutes } from './status/status.route';
 
 const router = express.Router();
 
@@ -27,4 +28,5 @@ router
     UserController.updateProfile
   );
 router.use('/wishlist', WishlistRoutes);
+router.use('/status', StatusRoutes);
 export const UserRoutes = router;
