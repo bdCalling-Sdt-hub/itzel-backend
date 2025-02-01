@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { USER_ROLES } from '../../../enums/user';
 
 export type IUser = {
@@ -10,6 +10,8 @@ export type IUser = {
   location: string;
   profile?: string;
   status: 'active' | 'delete';
+  eventWishList: Array<Types.ObjectId>;
+  jobWishList: Array<Types.ObjectId>;
   verified: boolean;
   authentication?: {
     isResetPassword: boolean;

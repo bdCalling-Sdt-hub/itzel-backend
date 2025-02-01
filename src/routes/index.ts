@@ -9,6 +9,7 @@ import { InfoRoutes } from '../app/modules/info/info.route';
 import { OrganizationsRoutes } from '../app/modules/organizations/organizations.route';
 import { JobRoutes } from '../app/modules/job/job.route';
 import { ApplicantRoutes } from '../app/modules/applicant/applicant.route';
+import { EventWishlistRoutes } from '../app/modules/eventWishlist/eventWishlist.route';
 
 const router = express.Router();
 
@@ -52,6 +53,10 @@ const apiRoutes = [
   {
     path: '/applicant',
     route: ApplicantRoutes,
+  },
+  {
+    path: '/eventWishlist',
+    route: EventWishlistRoutes,
   },
 ];
 

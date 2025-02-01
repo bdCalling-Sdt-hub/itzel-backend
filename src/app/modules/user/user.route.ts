@@ -5,6 +5,7 @@ import fileUploadHandler from '../../middlewares/fileUploadHandler';
 import validateRequest from '../../middlewares/validateRequest';
 import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
+import { WishlistRoutes } from './wishlist/wishlist.route';
 
 const router = express.Router();
 
@@ -25,5 +26,5 @@ router
     fileUploadHandler(),
     UserController.updateProfile
   );
-
+router.use('/wishlist', WishlistRoutes);
 export const UserRoutes = router;

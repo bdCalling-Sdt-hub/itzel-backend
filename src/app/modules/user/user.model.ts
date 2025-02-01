@@ -17,6 +17,14 @@ const userSchema = new Schema<IUser, UserModal>(
       enum: Object.values(USER_ROLES),
       required: true,
     },
+    eventWishList: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
+      required: false,
+    },
+    jobWishList: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
+      required: false,
+    },
     email: {
       type: String,
       required: true,
