@@ -26,7 +26,8 @@ router
     auth(USER_ROLES.ADMIN, USER_ROLES.USER),
     fileUploadHandler(),
     UserController.updateProfile
-  );
+  )
+  .delete(auth(...Object.values(USER_ROLES)), UserController.deleteUser);
 router.use('/wishlist', WishlistRoutes);
 router.use('/status', StatusRoutes);
 export const UserRoutes = router;
