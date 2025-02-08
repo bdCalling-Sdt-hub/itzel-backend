@@ -82,6 +82,8 @@ const updateEvent = async (
   ) {
     await unlinkFile(isExistEvent.introMedia);
   }
+  if (typeof payload.location === 'string')
+    payload.location = JSON.parse(payload.location);
   if (typeof payload.tags === 'string') payload.tags = JSON.parse(payload.tags);
   const result = await Event.findByIdAndUpdate(id, payload, { new: true });
   if (!result) {
