@@ -4,6 +4,7 @@ import { Job } from './job.model';
 import { IJob } from './job.interface';
 
 import unlinkFile from '../../../shared/unlinkFile';
+import { User } from '../user/user.model';
 
 const createJob = async (payload: IJob): Promise<IJob> => {
   if (typeof payload.questions === 'string')
@@ -23,7 +24,8 @@ const createJob = async (payload: IJob): Promise<IJob> => {
 };
 
 const getAllJobs = async (
-  queryFields: Record<string, any>
+  queryFields: Record<string, any>,
+  user?: any
 ): Promise<IJob[]> => {
   const { search, page, limit } = queryFields;
   const query = search
@@ -52,6 +54,19 @@ const getAllJobs = async (
   delete queryFields.page;
   delete queryFields.limit;
   queryBuilder.find(queryFields);
+  if (user) {
+    const finalResult = await queryBuilder;
+    const result = await Promise.all(
+      finalResult.map(async (job: any) => {
+        const existUser = await User.findById(user.id);
+        console.log(existUser);
+        console.log(existUser?.jobWishList);
+        const isFavourite = existUser?.jobWishList.includes(job._id);
+        return { ...job.toObject(), isFavourite };
+      })
+    );
+    return result;
+  }
   return await queryBuilder;
 };
 

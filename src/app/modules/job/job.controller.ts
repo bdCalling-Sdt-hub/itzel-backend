@@ -3,6 +3,9 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import { JobService } from './job.service';
+import { jwtHelper } from '../../../helpers/jwtHelper';
+import config from '../../../config';
+import { Secret } from 'jsonwebtoken';
 
 const createJob = catchAsync(async (req: Request, res: Response) => {
   if (req.files && 'image' in req.files && req.files.image[0]) {
@@ -20,7 +23,11 @@ const createJob = catchAsync(async (req: Request, res: Response) => {
 
 const getAllJobs = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
-  const result = await JobService.getAllJobs(query);
+  const token = req.headers.authorization?.split(' ')[1] as string | undefined;
+  const user = token
+    ? jwtHelper.verifyToken(token, config.jwt.jwt_secret as Secret)
+    : null;
+  const result = await JobService.getAllJobs(query, user);
   sendResponse(res, {
     pagination: {
       limit: Number(query.limit) || 10,
