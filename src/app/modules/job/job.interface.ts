@@ -8,6 +8,10 @@ export type IJob = {
   address: string;
   level: string;
   jobType: string;
+  requirements: Array<string>;
+  experience: Array<string>;
+  additionalRequirement: Array<string>;
+
   salary: string;
   postedBy: Types.ObjectId;
   questions: Array<string>;

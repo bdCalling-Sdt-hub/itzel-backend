@@ -8,6 +8,13 @@ import unlinkFile from '../../../shared/unlinkFile';
 const createJob = async (payload: IJob): Promise<IJob> => {
   if (typeof payload.questions === 'string')
     payload.questions = JSON.parse(payload.questions);
+  if (typeof payload.requirements === 'string')
+    payload.requirements = JSON.parse(payload.requirements);
+  if (typeof payload.experience === 'string')
+    payload.experience = JSON.parse(payload.experience);
+  if (typeof payload.additionalRequirement === 'string')
+    payload.additionalRequirement = JSON.parse(payload.additionalRequirement);
+
   const result = await Job.create(payload);
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to create job!');
@@ -59,6 +66,12 @@ const getJobById = async (id: string): Promise<IJob | null> => {
 const updateJob = async (id: string, payload: IJob): Promise<IJob | null> => {
   if (typeof payload.questions === 'string')
     payload.questions = JSON.parse(payload.questions);
+  if (typeof payload.requirements === 'string')
+    payload.requirements = JSON.parse(payload.requirements);
+  if (typeof payload.experience === 'string')
+    payload.experience = JSON.parse(payload.experience);
+  if (typeof payload.additionalRequirement === 'string')
+    payload.additionalRequirement = JSON.parse(payload.additionalRequirement);
   const isExistJob = await getJobById(id);
   if (!isExistJob) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found!');
