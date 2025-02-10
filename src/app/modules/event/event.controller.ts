@@ -3,6 +3,9 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import { EventService } from './event.service';
+import { jwtHelper } from '../../../helpers/jwtHelper';
+import config from '../../../config';
+import { Secret } from 'jsonwebtoken';
 
 const createEvent = catchAsync(async (req: Request, res: Response) => {
   if (
@@ -29,8 +32,11 @@ const createEvent = catchAsync(async (req: Request, res: Response) => {
 
 const getAllEvents = catchAsync(async (req: Request, res: Response) => {
   const query = req.query;
-
-  const result = await EventService.getAllEvents(query);
+  const token = req.headers.authorization?.split(' ')[1] as string | undefined;
+  const user = token
+    ? jwtHelper.verifyToken(token, config.jwt.jwt_secret as Secret)
+    : null;
+  const result = await EventService.getAllEvents(query, user);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

@@ -6,7 +6,7 @@ import { User } from '../../user.model';
 const addEventToWishListToDB = async (userId: string, eventId: string) => {
   await UserService.getUserProfileFromDB({ id: userId });
   const update = await User.findByIdAndUpdate(userId, {
-    $addToSet: { jobWishList: eventId },
+    $addToSet: { eventWishList: eventId },
   });
   if (!update) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found');
@@ -19,7 +19,7 @@ const removeEventFromWishListFromDB = async (
 ) => {
   await UserService.getUserProfileFromDB({ id: userId });
   const update = await User.findByIdAndUpdate(userId, {
-    $pull: { jobWishList: eventId },
+    $pull: { eventWishList: eventId },
   });
   if (!update) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found');

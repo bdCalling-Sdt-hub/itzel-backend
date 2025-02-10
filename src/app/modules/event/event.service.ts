@@ -5,6 +5,8 @@ import { IEvent } from './event.interface';
 import unlinkFile from '../../../shared/unlinkFile';
 import { Group } from '../group/group.model';
 import { IGroup } from '../group/group.interface';
+import { User } from '../user/user.model';
+import { IUser } from '../user/user.interface';
 
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
   // await EventValidation.createEventZodSchema.parseAsync(payload);
@@ -27,7 +29,8 @@ const createEvent = async (payload: IEvent): Promise<IEvent> => {
 };
 
 const getAllEvents = async (
-  queryFields: Record<string, any>
+  queryFields: Record<string, any>,
+  user?: any
 ): Promise<IEvent[]> => {
   const { search, page, limit } = queryFields;
   const query = search
@@ -51,7 +54,21 @@ const getAllEvents = async (
   delete queryFields.page;
   delete queryFields.limit;
   queryBuilder.find(queryFields);
-  return await queryBuilder;
+  if (user) {
+    const finalResult = await queryBuilder;
+    const result = await Promise.all(
+      finalResult.map(async (event: any) => {
+        const existUser = await User.findById(user.id);
+        console.log(existUser);
+        console.log(existUser?.eventWishList);
+        const isFavourite = existUser?.eventWishList.includes(event._id);
+        return { ...event.toObject(), isFavourite };
+      })
+    );
+    return result;
+  }
+  const result = await queryBuilder;
+  return result;
 };
 
 const getEventById = async (id: string): Promise<IEvent | null> => {
