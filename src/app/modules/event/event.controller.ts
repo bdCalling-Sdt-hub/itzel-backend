@@ -23,7 +23,7 @@ const createEvent = catchAsync(async (req: Request, res: Response) => {
   req.body.creator = req.user.id;
   const result = await EventService.createEvent(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Event created successfully',
     data: result,

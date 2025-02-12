@@ -11,7 +11,7 @@ const createOrganizations = catchAsync(async (req: Request, res: Response) => {
 
   const result = await OrganizationsService.createOrganizations(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Organizations created successfully',
     data: result,

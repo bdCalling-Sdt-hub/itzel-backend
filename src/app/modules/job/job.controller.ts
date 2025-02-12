@@ -14,7 +14,7 @@ const createJob = catchAsync(async (req: Request, res: Response) => {
   req.body.postedBy = req.user.id;
   const result = await JobService.createJob(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Job created successfully',
     data: result,

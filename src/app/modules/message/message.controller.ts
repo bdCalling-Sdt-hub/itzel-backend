@@ -16,7 +16,7 @@ const createMessage = catchAsync(async (req: Request, res: Response) => {
   const data = { ...req.body, images };
   const result = await MessageService.createMessage(data);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Message created successfully',
     data: result,
@@ -57,7 +57,7 @@ const updateMessage = catchAsync(async (req: Request, res: Response) => {
   const data = { ...req.body, ...(images.length > 0 && images) };
   const result = await MessageService.updateMessage(id, data);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Message updated successfully',
     data: result,

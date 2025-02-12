@@ -7,7 +7,7 @@ import { InfoService } from './info.service';
 const createInfo = catchAsync(async (req: Request, res: Response) => {
   const result = await InfoService.createInfo(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Info created successfully',
     data: result,

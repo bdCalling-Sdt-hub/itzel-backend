@@ -8,7 +8,7 @@ const createApplicant = catchAsync(async (req: Request, res: Response) => {
   req.body.user = req.user.id;
   const result = await ApplicantService.createApplicant(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Applicant created successfully',
     data: result,

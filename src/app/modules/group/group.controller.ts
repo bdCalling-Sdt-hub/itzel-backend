@@ -7,7 +7,7 @@ import { GroupService } from './group.service';
 const createGroup = catchAsync(async (req: Request, res: Response) => {
   const result = await GroupService.createGroup(req.body);
   sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Group created successfully',
     data: result,
