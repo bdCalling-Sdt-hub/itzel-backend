@@ -4,6 +4,7 @@ import { Group } from './group.model';
 import { IGroup } from './group.interface';
 import { stripe } from '../../../config/stripe';
 import Stripe from 'stripe';
+import { Event } from '../event/event.model';
 
 const createGroup = async (payload: IGroup): Promise<IGroup> => {
   const result = await Group.create(payload);
@@ -94,11 +95,20 @@ const createPaymentIntent = async (payload: any) => {
 };
 
 const joinGroup = async (payload: any, id: string) => {
-  const result = await Group.findOneAndUpdate(
-    { event: payload.event },
-    { $addToSet: { members: id } },
-    { new: true }
-  );
+  console.log(payload);
+  const isExistEvent = Event.findById(payload.event);
+  if (!isExistEvent) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event not found!');
+  }
+  const isInGroup = await Group.findOne({ event: payload.event, members: id });
+  let result;
+  if (!isInGroup) {
+    result = await Group.findOneAndUpdate(
+      { event: payload.event },
+      { $push: { members: id } },
+      { new: true }
+    );
+  }
   const isExistTransaction: Stripe.PaymentIntent =
     await stripe.paymentIntents.retrieve(payload.transactionId);
   if (isExistTransaction.status !== 'succeeded') {
@@ -107,7 +117,7 @@ const joinGroup = async (payload: any, id: string) => {
       'Failed to join group. Please try again!'
     );
   }
-  if (!result || !isExistTransaction) {
+  if (!isExistTransaction) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to join group!');
   }
   return result;
