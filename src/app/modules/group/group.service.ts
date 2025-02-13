@@ -89,6 +89,7 @@ const createPaymentIntent = async (payload: any) => {
     );
   return {
     paymentIntent: paymentIntent.id,
+    client_secret: paymentIntent.client_secret,
   };
 };
 
