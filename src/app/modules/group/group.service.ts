@@ -95,8 +95,8 @@ const createPaymentIntent = async (payload: any) => {
 
 const joinGroup = async (payload: any, id: string) => {
   const result = await Group.findOneAndUpdate(
-    { _id: payload.event },
-    { $push: { members: id } },
+    { event: payload.event },
+    { $addToSet: { members: id } },
     { new: true }
   );
   const isExistTransaction: Stripe.PaymentIntent =
