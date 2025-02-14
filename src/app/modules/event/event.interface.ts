@@ -13,6 +13,8 @@ export type IEvent = {
   tags: Array<string>;
   price: number;
   creator: Types.ObjectId;
+  address: string;
+  coordinate: Array<number>;
 };
 
 export type EventModel = Model<IEvent>;

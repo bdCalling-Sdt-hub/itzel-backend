@@ -15,10 +15,8 @@ const eventSchema = new Schema<IEvent, EventModel>(
       ref: 'User',
       required: true,
     },
-    location: {
-      name: { type: String, required: true },
-      coordinate: { type: [Number], required: true },
-    },
+    address: { type: String, required: true },
+    coordinate: { type: [Number], required: true },
   },
   { timestamps: true }
 );
