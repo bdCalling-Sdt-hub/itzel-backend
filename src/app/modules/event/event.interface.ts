@@ -13,7 +13,6 @@ export type IEvent = {
   tags: Array<string>;
   price: number;
   creator: Types.ObjectId;
-  category: Types.ObjectId;
 };
 
 export type EventModel = Model<IEvent>;

@@ -10,7 +10,6 @@ const eventSchema = new Schema<IEvent, EventModel>(
     description: { type: String, required: true },
     tags: { type: [String], required: true },
     price: { type: Number, required: true },
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     creator: {
       type: Schema.Types.ObjectId,
       ref: 'User',
