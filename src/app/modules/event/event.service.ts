@@ -9,6 +9,7 @@ import { User } from '../user/user.model';
 import { IUser } from '../user/user.interface';
 
 const createEvent = async (payload: IEvent): Promise<IEvent> => {
+  console.log(payload);
   // await EventValidation.createEventZodSchema.parseAsync(payload);
   if (typeof payload.tags === 'string') payload.tags = JSON.parse(payload.tags);
   console.log(payload.location);
