@@ -129,7 +129,7 @@ const getJobStatus = async (userId: string): Promise<any> => {
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found!');
   }
-  const totalApplicant = await Applicant.findOne({ job: result._id });
+  const totalApplicant = await Applicant.countDocuments({ job: result._id });
   const allApplicants = await Applicant.find({ job: result._id }).populate(
     'user'
   );

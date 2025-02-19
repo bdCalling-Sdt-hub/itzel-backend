@@ -13,6 +13,11 @@ router.post(
   EventController.createEvent
 );
 router.get('/status', auth(USER_ROLES.CREATOR), EventController.getEventStatus);
+router.get(
+  '/status/all',
+  auth(USER_ROLES.CREATOR, USER_ROLES.USER),
+  EventController.getEventStatusAll
+);
 router.post(
   '/perticipate/:id',
   auth(...rolesOfAccess),

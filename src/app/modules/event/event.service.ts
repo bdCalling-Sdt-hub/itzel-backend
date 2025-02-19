@@ -154,6 +154,31 @@ const getEventStatus = async (userId: string): Promise<any> => {
   return finalResult;
 };
 
+const getEventStatusAll = async (id: string): Promise<any> => {
+  const result = await Event.find({ creator: id }).sort({ createdAt: -1 });
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event not found!');
+  }
+  const finalResult = await Promise.all([
+    ...result.map(async (event: any) => {
+      const group = await Group.findOne({ event: event._id });
+      const totalEarning = group?.members?.reduce(
+        (acc: number, participant: any) => {
+          return acc + event.price;
+        },
+        0
+      );
+      return {
+        ...event.toObject(),
+        totalEarning,
+        ticketSold: group?.members?.length,
+      };
+    }),
+  ]);
+
+  return finalResult;
+};
+
 export const EventService = {
   createEvent,
   getAllEvents,
@@ -162,4 +187,5 @@ export const EventService = {
   deleteEvent,
   perticipate,
   getEventStatus,
+  getEventStatusAll,
 };
