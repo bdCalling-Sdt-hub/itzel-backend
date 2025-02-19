@@ -14,6 +14,7 @@ router.post(
   validateRequestZFD(JobValidation.createJobZodSchema),
   JobController.createJob
 );
+router.get('/status', auth(USER_ROLES.CREATOR), JobController.getJobStatus);
 router.get('/', JobController.getAllJobs);
 router.get('/:id', JobController.getJobById);
 router.patch(

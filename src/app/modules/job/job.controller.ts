@@ -77,10 +77,22 @@ const deleteJob = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getJobStatus = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user.id;
+  const result = await JobService.getJobStatus(user);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Job status fetched successfully',
+    data: result,
+  });
+});
+
 export const JobController = {
   createJob,
   getAllJobs,
   getJobById,
   updateJob,
   deleteJob,
+  getJobStatus,
 };

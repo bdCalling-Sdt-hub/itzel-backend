@@ -5,6 +5,7 @@ import { IJob } from './job.interface';
 
 import unlinkFile from '../../../shared/unlinkFile';
 import { User } from '../user/user.model';
+import { Applicant } from '../applicant/applicant.model';
 
 const createJob = async (payload: IJob): Promise<IJob> => {
   if (typeof payload.questions === 'string')
@@ -121,10 +122,30 @@ const deleteJob = async (id: string): Promise<IJob | null> => {
   return result;
 };
 
+const getJobStatus = async (userId: string): Promise<any> => {
+  const result = await Job.findOne({ creator: userId }).sort({
+    createdAt: -1,
+  });
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event not found!');
+  }
+  const totalApplicant = await Applicant.findOne({ job: result._id });
+  const allApplicants = await Applicant.find({ job: result._id }).populate(
+    'user'
+  );
+  const finalResult = {
+    ...result.toObject(),
+    totalApplicant,
+    allApplicants,
+  };
+  return finalResult;
+};
+
 export const JobService = {
   createJob,
   getAllJobs,
   getJobById,
   updateJob,
   deleteJob,
+  getJobStatus,
 };
