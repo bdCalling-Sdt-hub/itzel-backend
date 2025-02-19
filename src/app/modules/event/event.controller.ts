@@ -97,6 +97,17 @@ const perticipate = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getEventStatus = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user.id;
+  const result = await EventService.getEventStatus(user);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Event status fetched successfully',
+    data: result,
+  });
+});
+
 export const EventController = {
   createEvent,
   getAllEvents,
@@ -104,4 +115,5 @@ export const EventController = {
   updateEvent,
   deleteEvent,
   perticipate,
+  getEventStatus,
 };

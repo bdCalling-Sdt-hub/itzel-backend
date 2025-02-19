@@ -132,6 +132,27 @@ const deleteEvent = async (id: string): Promise<IEvent | null> => {
 };
 
 const perticipate = async (eventId: string, userId: string): Promise<any> => {};
+const getEventStatus = async (userId: string): Promise<any> => {
+  const result = await Event.findOne({ creator: userId }).sort({
+    createdAt: -1,
+  });
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event not found!');
+  }
+  const group = await Group.findOne({ event: result._id });
+  const totalEarning = group?.members?.reduce(
+    (acc: number, participant: any) => {
+      return acc + result.price;
+    },
+    0
+  );
+  const finalResult = {
+    ...result.toObject(),
+    totalEarning,
+    ticketSold: group?.members?.length,
+  };
+  return finalResult;
+};
 
 export const EventService = {
   createEvent,
@@ -140,4 +161,5 @@ export const EventService = {
   updateEvent,
   deleteEvent,
   perticipate,
+  getEventStatus,
 };

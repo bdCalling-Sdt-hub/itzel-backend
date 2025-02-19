@@ -12,6 +12,7 @@ router.post(
   fileUploadHandler(),
   EventController.createEvent
 );
+router.get('/status', auth(USER_ROLES.CREATOR), EventController.getEventStatus);
 router.post(
   '/perticipate/:id',
   auth(...rolesOfAccess),
@@ -19,6 +20,7 @@ router.post(
 );
 router.get('/', EventController.getAllEvents);
 router.get('/:id', EventController.getEventById);
+
 router.patch(
   '/:id',
   auth(...rolesOfAccess),
