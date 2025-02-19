@@ -123,11 +123,11 @@ const deleteJob = async (id: string): Promise<IJob | null> => {
 };
 
 const getJobStatus = async (userId: string): Promise<any> => {
-  const result = await Job.findOne({ creator: userId }).sort({
+  const result = await Job.findOne({ postedBy: userId }).sort({
     createdAt: -1,
   });
   if (!result) {
-    throw new ApiError(StatusCodes.BAD_REQUEST, 'Event not found!');
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found!');
   }
   const totalApplicant = await Applicant.findOne({ job: result._id });
   const allApplicants = await Applicant.find({ job: result._id }).populate(
