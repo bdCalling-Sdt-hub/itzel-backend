@@ -87,6 +87,16 @@ const getJobStatus = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getAllJobStatus = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user.id;
+  const result = await JobService.getAllJobStatus(user);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Job status fetched successfully',
+    data: result,
+  });
+});
 
 export const JobController = {
   createJob,
@@ -95,4 +105,5 @@ export const JobController = {
   updateJob,
   deleteJob,
   getJobStatus,
+  getAllJobStatus,
 };

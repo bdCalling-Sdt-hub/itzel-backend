@@ -141,6 +141,27 @@ const getJobStatus = async (userId: string): Promise<any> => {
   return finalResult;
 };
 
+const getAllJobStatus = async (id: string): Promise<any> => {
+  const result = await Job.find({ postedBy: id }).sort({ createdAt: -1 });
+  if (!result) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Job not found!');
+  }
+  const finalResult = await Promise.all(
+    result.map(async (job: any) => {
+      const totalApplicant = await Applicant.countDocuments({ job: job._id });
+      const allApplicants = await Applicant.find({ job: job._id }).populate(
+        'user'
+      );
+      return {
+        ...job.toObject(),
+        totalApplicant,
+        allApplicants,
+      };
+    })
+  );
+  return finalResult;
+};
+
 export const JobService = {
   createJob,
   getAllJobs,
@@ -148,4 +169,5 @@ export const JobService = {
   updateJob,
   deleteJob,
   getJobStatus,
+  getAllJobStatus,
 };

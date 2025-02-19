@@ -15,6 +15,11 @@ router.post(
   JobController.createJob
 );
 router.get('/status', auth(USER_ROLES.CREATOR), JobController.getJobStatus);
+router.get(
+  '/status/all',
+  auth(USER_ROLES.CREATOR),
+  JobController.getAllJobStatus
+);
 router.get('/', JobController.getAllJobs);
 router.get('/:id', JobController.getJobById);
 router.patch(
