@@ -15,7 +15,7 @@ router.get(
   auth(USER_ROLES.ADMIN, USER_ROLES.USER, USER_ROLES.CREATOR),
   UserController.getUserProfile
 );
-
+router.get('/status', auth(USER_ROLES.CREATOR), UserController.getMyStatus);
 router
   .route('/')
   .post(

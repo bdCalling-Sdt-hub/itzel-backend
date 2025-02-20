@@ -64,9 +64,22 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyStatus = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  const result = await UserService.getMyStatus(user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Status fetched successfully',
+    data: result,
+  });
+});
+
 export const UserController = {
   createUser,
   getUserProfile,
   updateProfile,
   deleteUser,
+  getMyStatus,
 };

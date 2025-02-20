@@ -8,6 +8,8 @@ import unlinkFile from '../../../shared/unlinkFile';
 import generateOTP from '../../../util/generateOTP';
 import { IUser } from './user.interface';
 import { User } from './user.model';
+import { Event } from '../event/event.model';
+import { Job } from '../job/job.model';
 
 const createUserToDB = async (payload: Partial<IUser>): Promise<IUser> => {
   //set role
@@ -92,9 +94,20 @@ const deleteUserFromDB = async (user: JwtPayload): Promise<any> => {
   return deleteUser;
 };
 
+const getMyStatus = async (user: JwtPayload): Promise<any> => {
+  const { id } = user;
+  let finalResult;
+  const allEvents = await Event.find({ creator: id });
+  const allJobs = await Job.find({ postedBy: id });
+
+  finalResult = { allEvents, allJobs };
+  return finalResult;
+};
+
 export const UserService = {
   createUserToDB,
   getUserProfileFromDB,
   updateProfileToDB,
   deleteUserFromDB,
+  getMyStatus,
 };
